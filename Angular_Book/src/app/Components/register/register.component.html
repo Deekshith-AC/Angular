@@ -1,0 +1,44 @@
+<p>register works!</p>
+<div class="authMainDiv">
+
+    <div class="authDiv">
+
+        <!-- Register heading page -->
+        <h1 class="registerHeading">Register</h1>
+
+        <form class="formContainer" #myForm="ngForm" (ngSubmit)="getData(myForm.value)">
+
+            <!-- Name field -->
+            <div class="fieldDiv">
+                <label for="fullName" style="font-weight: 600;">Enter Name :</label>
+                <input class="inp" type="text" ngModel name="fullName" id="fullName">
+            </div>
+
+            <!-- Email field -->
+            <div class="fieldDiv">
+                <label for="email" style="font-weight: 600;">Enter Email :</label>
+                <input class="inp" type="email" ngModel name="email" id="email">
+            </div>
+
+            <!-- Password field -->
+            <div class="fieldDiv">
+                <label for="password" style="font-weight: 600;">Enter Password :</label>
+                <input class="inp" type="password" ngModel name="password" id="password">
+            </div>
+
+            <!-- Confirm Password field -->
+            <div class="fieldDiv">
+                <label for="cPasswordName" style="font-weight: 600;">Confirm Password :</label>
+                <input class="inp" type="password" ngModel name="cPassword" id="cPasswordName">
+            </div>
+
+            <!-- Handle register submit -->
+            <div class="fieldDiv">
+                <input class="inpBtn" type="submit" value="Register">
+            </div>
+
+            <!-- Redirect on login page -->
+            <p>Already have an account? <a routerLink="/login" class="pLogin" >LogIn</a></p>
+        </form>
+    </div>
+</div>
