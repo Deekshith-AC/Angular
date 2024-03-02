@@ -6,30 +6,30 @@
         <!-- Register heading page -->
         <h1 class="registerHeading">Register</h1>
 
-        <form class="formContainer" #myForm="ngForm" (ngSubmit)="getData(myForm.value)">
+        <form class="formContainer" #myForm="ngForm" (ngSubmit)="registerUser(myForm.value)">
 
             <!-- Name field -->
             <div class="fieldDiv">
                 <label for="fullName" style="font-weight: 600;">Enter Name :</label>
-                <input class="inp" type="text" ngModel name="fullName" id="fullName">
+                <input class="inp" type="text" [(ngModel)]="fullName" id="fullName">
             </div>
 
             <!-- Email field -->
             <div class="fieldDiv">
                 <label for="email" style="font-weight: 600;">Enter Email :</label>
-                <input class="inp" type="email" ngModel name="email" id="email">
+                <input class="inp" type="email" [(ngModel)]="email" id="email">
             </div>
 
             <!-- Password field -->
             <div class="fieldDiv">
                 <label for="password" style="font-weight: 600;">Enter Password :</label>
-                <input class="inp" type="password" ngModel name="password" id="password">
+                <input class="inp" type="password" [(ngModel)]="password" id="password">
             </div>
 
             <!-- Confirm Password field -->
             <div class="fieldDiv">
                 <label for="cPasswordName" style="font-weight: 600;">Confirm Password :</label>
-                <input class="inp" type="password" ngModel name="cPassword" id="cPasswordName">
+                <input class="inp" type="password" [(ngModel)]="cPassword" id="cPasswordName">
             </div>
 
             <!-- Handle register submit -->
