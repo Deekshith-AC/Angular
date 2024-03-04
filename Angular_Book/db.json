@@ -1,14 +1,18 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "username": "user1",
-            "email": "user1@example.com"
-        },
-        {
-            "id": 2,
-            "username": "user2",
-            "email": "user2@example.com"
-        }
-    ]
+  "users": [
+    {
+      "id": "1413",
+      "FullName": "deekshith",
+      "Email": "7676798525@gmail.com",
+      "Password": "asdfgh",
+      "ConfirmPassword": "asdfgh"
+    },
+    {
+      "id": "563e",
+      "FullName": "fsgfbvvdz",
+      "Email": "7676798525@gmail.com",
+      "Password": "asdfgh",
+      "ConfirmPassword": "asdfgh"
+    }
+  ]
 }

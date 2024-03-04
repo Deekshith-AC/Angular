@@ -31,6 +31,7 @@ export class RegisterComponent {
   //Registering user using data form form
   //If you are using object of differebt class then decare the object outside function not inside the function
   newUser!: RegisterUser;
+  userjson!:any;
 
   // Validation
   validRegex: RegExp =
@@ -74,33 +75,19 @@ export class RegisterComponent {
       return;
     }
 
-    this.newUser.FullName = this.fullName;
-    this.newUser.Email = this.email;
-    this.newUser.Password = this.password;
-    this.newUser.ConfirmPassword = this.cPassword;
+    this.newUser = new RegisterUser(registerData.fullName, registerData.email, registerData.password, registerData.cPassword);
+    console.log(this.newUser);    
+    this.userjson = JSON.stringify(this.newUser);
+    console.log(this.userjson);
+    
 
-    JSON.stringify(this.newUser);
     this.jsonservice.storeData(this.newUser).subscribe(response => {
       alert('User Registration successfull:');
-      console.log(response);
-      
+      window.location.pathname = "login";
+      console.log(response);      
     }, error => {
       alert('Error In registering user: ');
       console.log(error);
-      
     });
-   
-
-    console.log(registerData);
-
-    this.newUser = new RegisterUser(registerData.FullName, registerData.Email, registerData.password, registerData.cPassword);
-
   }
-
-
-
-
-
-
-
 }

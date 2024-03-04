@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="authMainDiv">
+    <div class="authDiv">
+
+        <!-- Login heading -->
+        <h1 class="registerHeading">Login</h1>
+
+        <form action="#" class="formContainer" #myForm="ngForm" (ngSubmit)="loginUser(myForm.value)">
+
+            <!-- Email field -->
+            <div class="fieldDiv">
+                <label for="email" style="font-weight: 600;">Enter Email :</label>
+                <input class="inp" type="email" name="email" [(ngModel)]="email" id="email">
+            </div>
+
+            <!-- Password field -->
+            <div class="fieldDiv">
+                <label for="password" style="font-weight: 600;">Enter Password :</label>
+                <input class="inp" type="password" name="password" [(ngModel)]="password" id="password">
+            </div>
+
+            <!-- Handle login submit -->
+            <div class="fieldDiv">
+                <input class="inpBtn" type="submit" value="Login" >
+            </div>
+
+            <!-- Redirect on register page -->
+            <p>Doesn't have an account? <a href="" routerLink="/register" class="pRegister" >Register</a></p>
+        </form>
+    </div>
+</div>

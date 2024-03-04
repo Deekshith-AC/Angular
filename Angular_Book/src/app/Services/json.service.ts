@@ -14,5 +14,10 @@ export class JsonService {
   storeData(data: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, data);
   }
+
+  // loginUser(Data: any): Observable<any> 
+  // {
+
+  // }
 }
 

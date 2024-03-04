@@ -1,9 +1,9 @@
 export class RegisterUser
 {
-    FullName: string;
-    Email: string;
-    Password: string;
-    ConfirmPassword: string;
+    FullName!: string;
+    Email!: string;
+    Password!: string;
+    ConfirmPassword!: string;
 
     constructor(FullName: string, Email: string, Password: string, ConfirmPassword: string)
     {
