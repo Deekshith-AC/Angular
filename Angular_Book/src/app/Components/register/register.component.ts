@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { JsonService } from 'src/app/Services/json.service';
 import { RegisterUser } from "../../CustomClaases/register.class"
 
 @Component({
@@ -17,7 +18,7 @@ export class RegisterComponent {
 
 
   //Checking for already logged in user
-  constructor(public router: Router) {
+  constructor(public router: Router, private jsonservice: JsonService) {
 
   }
   checkAuth: string | null = window.localStorage.getItem('user');
@@ -73,6 +74,22 @@ export class RegisterComponent {
       return;
     }
 
+    this.newUser.FullName = this.fullName;
+    this.newUser.Email = this.email;
+    this.newUser.Password = this.password;
+    this.newUser.ConfirmPassword = this.cPassword;
+
+    JSON.stringify(this.newUser);
+    this.jsonservice.storeData(this.newUser).subscribe(response => {
+      alert('User Registration successfull:');
+      console.log(response);
+      
+    }, error => {
+      alert('Error In registering user: ');
+      console.log(error);
+      
+    });
+   
 
     console.log(registerData);
 
