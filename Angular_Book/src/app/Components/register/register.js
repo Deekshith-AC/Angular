@@ -1,66 +1,147 @@
-app.controller("loginCtrl", [
+app.controller("booksCtrl", [
     "$scope",
-    "loginService",
+    "booksService",
     "$window",
-    function (sc,
-      loginService,
-      $window) {
-    //   // Check user logged in or not.
-    //   var checkAuth = $window.localStorage.getItem("user");
+    function (sc, booksService, $window) {
+      //First code that shouls be implemented in all Controllers
+      if ($window.localStorage.getItem("user") == null) {
+        booksService.logoutService();
+      }
+      sc.SearchImage = true;
+      //Logout Implementation
+      sc.logout = function () {
+        console.log("I am logged out");
+        booksService.logoutService();
+      };
+      //Fetching User Name From Local Storage
+      sc.UserDisplyName = JSON.parse(
+        $window.localStorage.getItem("user")
+      ).fullName;
   
-    //   if (checkAuth) {
-    //     // Redirect: To movies page. If the user already logged-in.
-    //     console.log("Redirecting to books");
-    //     loginService.goTobooks();
-    //   }
+      //The Input Search Box is Initialized to null
+      sc.searchBook = "";
+      sc.searchedBookResult = [];
   
-    //   //Redirecting to Register page
-    //   sc.redirectRegister = function () {
-    //     // console.log("Clicked on Register link");
-    //     loginService.redirectToRegister();
-    //   }
+      //Sorting Function
+      sc.sortValue = "";
+      sc.sortingDD = false;
   
-      // Email field
-    //   sc.email = "";
+      sc.SortingFun = function () {
+        console.log(sc.selectedItem);
+        if (sc.selectedItem == "Title") {
+          sc.sortValue = "title";
+        } else if (sc.selectedItem == "Author Name") {
+          sc.sortValue = "author_name[0]";
+        } else if (sc.selectedItem == "Year") {
+          sc.sortValue = "publish_year[0]";
+        } else if (sc.selectedItem == "Rating") {
+          sc.sortValue = "ratings_average";
+        }
+      };
   
-      // Password field
-    //   sc.password = "";
+      //Filtering Function
+      sc.FilteredNewArray = [];
+      sc.filterValue = "";
+      sc.selectFltr = "";
+      sc.filteringDD = false;
+      let element;
+      let rra;
+      let arr;
   
-      // handle login form Submit
-      sc.handleFormSubmit = () => {
-        // var validRegex =
-        //   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  
-        // // check email validation.
-        // if (!validRegex.test(sc.email)) {
-        //   alert("Enter valid email.");
-        //   return;
-        // }
-  
-        // // password validation.
-        // if (sc.password.length < 6) {
-        //   alert("Password must contain atleast 6 characters.");
-        //   return;
-        // } else if (sc.password.includes(" ")) {
-        //   alert("Password shouldn't contain any space.");
-        //   return;
-        // }
-  
-        // Fetch all registered users to check login credentials.
-        loginService.getUsers(function (data) {
-          sc.user = data.filter((data) => {
-            return data.email === sc.email && data.password === sc.password;
-          });
-          let l = sc.user.length;
-          if (l === 0) {
-            alert("Enter valid credentials.");
-            return;
+      sc.FilterFun = function (value) {
+        try {
+          sc.FilteredNewArray = [] 
+          sc.displayFilter = true;
+          sc.displaySearch = false;
+          if (value !== "" && sc.FilteredNewArray.length !== 0) {
+            sc.searchedBookResultF = sc.FilteredNewArray;
+            console.log(sc.searchedBookResultF);
           }
-          $window.localStorage.setItem("user", JSON.stringify(sc.user[0]));
-          console.log(JSON.stringify(sc.user[0]));
-          alert("Login Successful.");
-          loginService.goTobooks();
-        });
+          console.log(value);
+          if (value == "History") {
+            sc.filterValue = "history";
+          } else if (value == "Fiction") {
+            sc.filterValue = "fiction";
+          } else if (value == "Mystery") {
+            sc.filterValue = "mystery";
+          } else if (value == "Horror") {
+            sc.filterValue = "horror";
+          } else if (value == "Finance") {
+            sc.filterValue = "finance";
+          } else if (value == "Adventure") {
+            sc.filterValue = "adventure";
+          } else if (value == "General") {
+            sc.filterValue = "general";
+          }
+          arr = sc.searchedBookResult;
+          if (arr !== undefined) {
+            for (let i = 0; i < arr.length; i++) {
+              element = arr[i];
+              rra = element.subject;
+              console.log(sc.FilteredNewArray);
+              if (rra !== undefined) {
+                for (let j = 0; j < rra.length; j++) {
+                  sub = rra[j];
+                  sub = sub.toLowerCase();
+                  if (sub.includes(sc.filterValue)) {
+                    sc.FilteredNewArray.push(element);
+                  }
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.log("Some Error", error);
+        }
+      };
+  
+      // Calling the serach Service method from Service
+      sc.sortValue = "";
+  
+      sc.searchBookFun = function () {
+        sc.searchedBookResult = []
+        // console.log("Searching book in Controller");
+        sc.SearchImage = true;
+        sc.displaySearch = false;
+        if (sc.searchBook) {
+          // console.log("Searching Book function entered in Controller");
+          console.log(sc.searchBook);
+  
+          booksService
+            .searchBooks(sc.searchBook)
+  
+            .then(function (searchedBookResult) {
+              sc.searchedBookResult = searchedBookResult;
+              console.log(sc.searchedBookResult);
+              sc.displaySearch = true;
+              //Sort
+              sc.sortingDD = true;
+              sc.Sitems = ["Title", "Author Name", "Year", "Rating"];
+              sc.selectedItem = "Title";
+              sc.Fitems = [
+                "General",
+                "History",
+                "Fiction",
+                "Mystery",
+                "Finance",
+                "Horror",
+                "Adventure",
+              ];
+              sc.filterValue = "";
+              sc.SearchImage = false;e;
+            })
+  
+            .catch(function () {
+              sc.searchedBookResult.push({
+                title:
+                  "Sorry There is SomeThing Error in Finding Book You Searched",
+              });
+            })
+  
+            .finally(function () {
+              sc.searchBook = "";
+            });
+        }
       };
     },
   ]);
